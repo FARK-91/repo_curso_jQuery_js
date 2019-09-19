@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="src/css/modal.css" />
 </head>
 <body>
-  <section class="home search-active" id="home">
+  <section class="home" id="home">
     <div class="home-sidebar">
       <div class="sidebar">
         <div class="logo">
@@ -16,7 +16,7 @@
             <img src="src/images/platzi-video.png" alt="Platzi Video - la Plataforma de videos cheveres"/>
           </figure>
         </div>
-        <div class="sidebarPlaylist">
+        <div class="sidebarPlaylist" id="moviePlayList">
           <h2 class="sidebarPlaylist-title">Mi Playlist <span class="btn warning">Escuchar Playlist</span> </h2>
           <ol class="myPlaylist">
             <li class="myPlaylist-item">
@@ -84,7 +84,7 @@
             </li>
           </ol>
         </div>
-        <div class="sidebarPlaylist">
+        <div class="sidebarPlaylist" id="musicPlayList">
           <h2 class="sidebarPlaylist-title">Playlist de amigos</h2>
           <ul class="playlistFriends">
             <li class="playlistFriends-item">
@@ -197,15 +197,7 @@
       <!-- </section> -->
     </div>
     <div class="home-featuring" id="featuring">
-      <div class="featuring">
-        <div class="featuring-image">
-          <img src="src/images/covers/solar-sailer.jpg" width="70" height="100" alt="">
-        </div>
-        <div class="featuring-content">
-          <p class="featuring-title">Pelicula encontrada</p>
-          <p class="featuring-album">titulo de la peli</p>
-        </div>
-      </div>
+
     </div>
   </section>
   <div class="overlay" id="overlay">
@@ -222,5 +214,7 @@
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="src/js/home.js"></script>
+  <script src="src/js/reto1.js"></script>
+  <script src="src/js/reto2.js"></script>
 </body>
 </html>

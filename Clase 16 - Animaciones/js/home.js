@@ -1,15 +1,12 @@
 
-/*Clase #18: LocalStorage*/
+/*Clase #16: Animaciones*/
 
 (async function load(){
 
   async function getData(url){
     const response = await fetch(url)
     const data = await response.json()
-    if (data.data.movie_count > 0){
-        return data;
-    }
-    throw new Error('No se encontró ningun resultado');
+    return data;
   }
 
   const $form = document.getElementById('form')
@@ -49,19 +46,13 @@
     $featuringContainer.append($loader)
 
     const data = new FormData($form);
-    try {
-      const {
-        data:{
-          movies: pelis
-        }
-      } = await getData(`${initApi}list_movies.json?limit=1&query_term=${data.get('name')}`)
-      const HTMLString = featuringTemplate(pelis[0])
-      $featuringContainer.innerHTML = HTMLString;
-    }catch(error){
-      alert(error.message);
-      $loader.remove()
-      $home.classList.remove('search-active')
-    }
+    const {
+      data:{
+        movies: pelis
+      }
+    } = await getData(`${initApi}list_movies.json?limit=1&query_term=${data.get('name')}`)
+    const HTMLString = featuringTemplate(pelis[0])
+    $featuringContainer.innerHTML = HTMLString;
   })
 
   function videoItemTemplate(movie, category){
@@ -93,41 +84,26 @@
       const HTMLString = videoItemTemplate(movie, category);
       const movieElement = createTemplate(HTMLString);
       $container.append(movieElement);
+      // DevFree: Agregamos animacion a cada elemento de pelicula, tomando en
+      // cuenta que las animaciones se crean desde CSS y no con JS. Desde aqui
+      // solo le damos entrada a la animacion sobre un elemento deseado.
       const image = movieElement.querySelector('img');
       image.addEventListener('load', (event) => {
         event.srcElement.classList.add('fadeIn');
       })
       addEventClick(movieElement);
+      // debugger
     })
   }
 
-  // Creo la funcion que controlara el manejo del localStorage de acuerdo a mis
-  // arrays de datos.
-  async function cacheExist(category){
-    const listName = `${category}List`
-    const cacheList = window.localStorage.getItem(listName)
-    if (cacheList){
-        // Devuelvo las listas a su estado original de arrays con JSON.parse()
-        return JSON.parse(cacheList)
-    }
-
-    cons data = await getData(`${initApi}list_movies.json?genre=${category}`)
-  }
-
-  // const { data: { movies: actionList } } = await getData(initApi+'list_movies.json?genre=action')
-  const actionList = await cacheExist('action')
-  // DevFree: Guardo los arrays de datos en el local Storage.
-  // Conviertiendo el array en string con JSON.stringify()
-  window.localStorage.setItem('actionList', JSON.stringify(actionList))
+  const { data: { movies: actionList } } = await getData(initApi+'list_movies.json?genre=action')
   const $actionContainer = document.querySelector('#action');
   renderMovieList(actionList ,$actionContainer, 'action')
 
   const { data: { movies: dramaList } } = await getData(initApi+'list_movies.json?genre=drama')
-  window.localStorage.setItem('dramaList', JSON.stringify(dramaList))
   const $dramaContainer = document.getElementById('drama');
   renderMovieList(dramaList ,$dramaContainer, 'drama')
   const { data: { movies: amationList } } = await getData(`${initApi}list_movies.json?genre=animation`)
-  window.localStorage.setItem('amationList', JSON.stringify(amationList))
   const $animationContainer = document.querySelector('#animation');
   renderMovieList(amationList ,$animationContainer, 'animation')
 
